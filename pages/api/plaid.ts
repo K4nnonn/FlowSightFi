@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Configuration, PlaidApi, PlaidEnvironments, Products, CountryCode } from 'plaid';
+import { Configuration, PlaidApi, PlaidEnvironments } from 'plaid';
 
 const configuration = new Configuration({
   basePath: PlaidEnvironments.sandbox,
@@ -24,10 +24,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             client_user_id: 'user-id',
           },
           client_name: 'FlowSightFI',
-          products: [Products.Transactions, Products.Accounts],
-          country_codes: [CountryCode.Us],
+          products: ['transactions'],
+          country_codes: ['US'],
           language: 'en',
-        });
+        } as any);
         
         res.status(200).json({ link_token: response.data.link_token });
       } else if (action === 'exchange_public_token') {
